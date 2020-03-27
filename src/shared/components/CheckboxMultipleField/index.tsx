@@ -6,7 +6,7 @@ import { FormField, Option } from '../../models/field';
 const CheckboxMultipleField = ({ name, handleChange, options, required }: any) => {
   const stateValues = options.reduce((item: FormField, current: Option) => Object.assign({}, item, { [current.value]: false }), {});
   const [state, setState] = useState(stateValues);
-  const [stateChanged, setSstateChanged] = useState(false);
+  const [stateChanged, setStateChanged] = useState(false);
   useEffect(() => {
     if (stateChanged) {
       const keys = Object.keys(state);
@@ -22,9 +22,9 @@ const CheckboxMultipleField = ({ name, handleChange, options, required }: any) =
   }, [state, stateChanged, handleChange, name]);
 
   const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
-    setSstateChanged(false);
+    setStateChanged(false);
     setState({ ...state, [event.target.name]: event.target.checked });
-    setSstateChanged(true);
+    setStateChanged(true);
   };
 
   return (
