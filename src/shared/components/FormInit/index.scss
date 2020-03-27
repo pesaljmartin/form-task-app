@@ -1,0 +1,24 @@
+.form-fields {
+  width: 30%;
+  margin: 20px auto 0 auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+
+  > div, Button {
+    margin: 10px 0;
+  }  
+
+  > div {
+    > div {
+      width: 100%;
+    }
+
+    &.checkbox_single {
+      margin-left: -11px;
+    }
+  }
+
+  .error {
+    color: red
+  }
+}
