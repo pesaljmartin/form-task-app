@@ -1,10 +1,17 @@
 import Checkbox from '@material-ui/core/Checkbox';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 
-const CheckboxSingleField = ({ name, value, handleChange, required }: any) => {
-  const [state, setState] = React.useState(value || false);
+interface FieldProps {
+  name: string;
+  required: boolean | undefined;
+  value: boolean;
+  handleChange: any; // formik event with takes html element and object
+}
 
-  const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+const CheckboxSingleField: FC<FieldProps> = ({ name, value, handleChange, required }) => {
+  const [state, setState] = useState<boolean>(value || false);
+
+  const onChange = (event: ChangeEvent<HTMLInputElement>): void => {
     setState(event.target.checked);
     handleChange({
       target: {

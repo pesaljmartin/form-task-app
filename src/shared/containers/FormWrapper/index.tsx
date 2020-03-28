@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import FormInit from '../../components/FormInit';
+import { Field } from '../../models/field';
 
-const FormWrapper = () => {
-  const [fields, setFields] = useState([]);
+const FormWrapper: FC = () => {
+  const [fields, setFields] = useState<Field[]>([]);
 
   useEffect(() => {
     fetch("./data/index.json")

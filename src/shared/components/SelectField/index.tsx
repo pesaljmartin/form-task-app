@@ -2,11 +2,20 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import React, { ChangeEvent } from 'react';
+import React, { ChangeEvent, FC, useState } from 'react';
 import { Option } from '../../models/field';
 
-const SelectField = ({ name, label, options, handleChange, value, required }: any) => {
-  const [state, setState] = React.useState(value || '');
+interface FieldProps {
+  name: string;
+  label: string | undefined;
+  required: boolean | undefined;
+  value: string;
+  options: Option[] | undefined;
+  handleChange: any; // formik event with takes html element and object
+}
+
+const SelectField: FC<FieldProps> = ({ name, label, options, handleChange, value, required }) => {
+  const [state, setState] = useState<string>(value || '');
 
   const onChange = (event: ChangeEvent<{ value: unknown }>): void => {
     setState(event.target.value as string);
@@ -26,7 +35,7 @@ const SelectField = ({ name, label, options, handleChange, value, required }: an
         value={state}
         onChange={onChange}
       >
-        {options.map((option: Option) => {
+        {options && options.map((option: Option) => {
           return <MenuItem key={option.value} value={option.value}>{option.label}</MenuItem>
         })}
       </Select>

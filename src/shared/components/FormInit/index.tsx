@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core';
 import { FieldArray, Form, Formik, FormikErrors } from 'formik';
-import React from 'react';
+import React, { FC } from 'react';
 import { Field, FormField } from '../../models/field';
 import CheckboxMultipleField from '../CheckboxMultipleField';
 import CheckboxSingleField from '../CheckboxSingleField';
@@ -9,8 +9,11 @@ import RadioFieldField from '../RadioField';
 import SelectField from '../SelectField';
 import './index.scss';
 
-const FormInit = (props: { fields: Field[] }) => {
-  const { fields } = props;
+interface Fields {
+  fields: Field[]
+}
+
+const FormInit: FC<Fields> = ({ fields }) => {
   const initialValues = fields.reduce((item: FormField, current: Field) => Object.assign({}, item, { [current.key]: undefined }), {});
   const requiredFields = fields.reduce((item: FormField, current: Field) => {
     const req = current.required ? { [current.key]: true } : null;

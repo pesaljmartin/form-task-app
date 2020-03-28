@@ -1,14 +1,25 @@
 import { FormControl, FormControlLabel, FormGroup } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
-import React, { ChangeEvent, useEffect, useState } from 'react';
-import { FormField, Option } from '../../models/field';
+import React, { ChangeEvent, FC, useEffect, useState } from 'react';
+import { Option } from '../../models/field';
 
-const CheckboxMultipleField = ({ name, handleChange, options, required }: any) => {
-  const stateValues = options.reduce((item: FormField, current: Option) => Object.assign({}, item, { [current.value]: false }), {});
-  const [state, setState] = useState(stateValues);
-  const [stateChanged, setStateChanged] = useState(false);
+interface FieldProps {
+  name: string;
+  required: boolean | undefined;
+  options: Option[] | undefined;
+  handleChange: any; // formik event with takes html element and object
+}
+
+interface FormField {
+  [key: string]: boolean;
+}
+
+const CheckboxMultipleField: FC<FieldProps> = ({ name, handleChange, options, required }) => {
+  const stateValues = options && options.reduce((item: FormField, current: Option) => Object.assign({}, item, { [current.value]: false }), {});
+  const [state, setState] = useState<FormField | undefined>(stateValues);
+  const [stateChanged, setStateChanged] = useState<boolean>(false);
   useEffect(() => {
-    if (stateChanged) {
+    if (state && stateChanged) {
       const keys = Object.keys(state);
       const value = keys.filter((id: string) => state[id]);
 
@@ -30,11 +41,11 @@ const CheckboxMultipleField = ({ name, handleChange, options, required }: any) =
   return (
     <FormControl required={required}>
       <FormGroup>
-        {options.map((option: Option) => {
+        {options && options.map((option: Option) => {
           return (
             <FormControlLabel
               key={option.value}
-              control={<Checkbox checked={state[option.value]} onChange={onChange} name={option.value} />}
+              control={<Checkbox checked={state ? state[option.value] : false} onChange={onChange} name={option.value} />}
               label={option.label}
             />
           )
